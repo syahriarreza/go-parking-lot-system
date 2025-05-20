@@ -22,8 +22,8 @@ func SaveLayoutForFloor(floor int, layout [][]string) error {
 	layoutLock.Lock()
 	defer layoutLock.Unlock()
 
-	if len(layoutData) > 0 {
-		return errors.New("layout data already exists, please reset data first")
+	if _, exist := layoutData[floor]; exist {
+		return fmt.Errorf("layout data already exists for floor %d, replacing floor layout is not possible, please reset data first", floor)
 	}
 
 	layoutData[floor] = layout
