@@ -1,0 +1,7 @@
+server:
+  port: 8080
+
+parking:
+  floors: 8
+  rows: 1000
+  columns: 1000
