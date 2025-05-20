@@ -1,0 +1,749 @@
+{
+	"info": {
+		"_postman_id": "46d7a7a0-a879-4e79-a3a4-f80c3dbb588c",
+		"name": "Go Parking Lot API",
+		"description": "Postman collection for testing Go Parking Lot System API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8434911"
+	},
+	"item": [
+		{
+			"name": "Set Layout Per Floor",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"floor\": 1,\n    \"layout\": [\n        [\n            \"B-1\",\n            \"M-1\",\n            \"A-1\"\n        ],\n        [\n            \"X-0\",\n            \"M-1\",\n            \"A-1\"\n        ]\n    ]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/layout/floor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"layout",
+						"floor"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Set Layout Per Floor",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"floor\": 1,\n    \"layout\": [\n        [\n            \"B-1\",\n            \"M-1\",\n            \"A-1\"\n        ],\n        [\n            \"X-0\",\n            \"M-1\",\n            \"A-1\"\n        ]\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/layout/floor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"layout",
+								"floor"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 20 May 2025 02:49:57 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "50"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Layout for floor saved successfully\"\n}"
+				},
+				{
+					"name": "Set Layout Per Floor (already exist)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"floor\": 1,\n    \"layout\": [\n        [\n            \"B-1\",\n            \"M-1\",\n            \"A-1\"\n        ],\n        [\n            \"X-0\",\n            \"M-1\",\n            \"A-1\"\n        ]\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/layout/floor",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"layout",
+								"floor"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 20 May 2025 02:50:08 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "64"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"layout data already exists, please reset data first\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Layout Map (Readable)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/layout/map?floor=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"layout",
+						"map"
+					],
+					"query": [
+						{
+							"key": "floor",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Layout Map (Readable)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/layout/map?floor=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"layout",
+								"map"
+							],
+							"query": [
+								{
+									"key": "floor",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 20 May 2025 02:13:45 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "70"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"floor\": 1,\n    \"map\": [\n        \"B-1(O)  M-1(O)  A-1(O)\",\n        \"X-0(O)  M-1(O)  A-1(O)\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Upload Layout Excel",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/Works/GO/src/github.com/syahriarreza/go-parking-lot-system/docs/layout.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/layout/upload",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"layout",
+						"upload"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Upload Layout Excel",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/D:/Works/GO/src/github.com/syahriarreza/go-parking-lot-system/docs/layout.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/layout/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"layout",
+								"upload"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 20 May 2025 03:56:45 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "49"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Excel layout uploaded successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Park Vehicle",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"vehicleType\": \"M\",\n  \"vehicleNumber\": \"M-123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/park",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"park"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Park Vehicle",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleType\": \"M\",\n  \"vehicleNumber\": \"M-123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/park",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"park"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 20 May 2025 02:20:39 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "23"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"spotId\": \"1-001-002\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Unpark Vehicle",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"spotId\": \"1-001-002\",\n  \"vehicleNumber\": \"M-123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/unpark",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"unpark"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Unpark Vehicle",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"spotId\": \"1-001-002\",\n  \"vehicleNumber\": \"M-123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/unpark",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"unpark"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 20 May 2025 02:35:48 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "31"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"vehicle unparked\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Available Spot",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/available?vehicleType=M",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"available"
+					],
+					"query": [
+						{
+							"key": "vehicleType",
+							"value": "M"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Available Spot (M)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/available?vehicleType=M",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"available"
+							],
+							"query": [
+								{
+									"key": "vehicleType",
+									"value": "M"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 20 May 2025 01:35:25 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "36"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"spots\": [\n        \"1-001-002\",\n        \"1-002-002\"\n    ]\n}"
+				},
+				{
+					"name": "Available Spot (B)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/available?vehicleType=B",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"available"
+							],
+							"query": [
+								{
+									"key": "vehicleType",
+									"value": "B"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 20 May 2025 01:36:20 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "24"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"spots\": [\n        \"1-001-001\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Search Vehicle",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/search/M-123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"search",
+						"M-123"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Search Vehicle (found)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/search/M-123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"search",
+								"M-123"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 20 May 2025 02:39:24 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "36"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"spotId\": \"1-001-002\",\n    \"found\": true\n}"
+				},
+				{
+					"name": "Search Vehicle (not found)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/search/M-1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"search",
+								"M-1234"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 20 May 2025 02:40:19 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "16"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"found\": false\n}"
+				}
+			]
+		},
+		{
+			"name": "Reset System",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/reset",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"reset"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Reset System",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/reset",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"reset"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 20 May 2025 03:04:38 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "38"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"System reset successful\"\n}"
+				}
+			]
+		}
+	]
+}
