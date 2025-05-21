@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Parking Lot API Simulator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 2rem;
+      max-width: 800px;
+    }
+
+    fieldset {
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    legend {
+      font-weight: bold;
+      padding: 0 10px;
+    }
+
+    label {
+      display: inline-block;
+      width: 130px;
+      margin-right: 8px;
+    }
+
+    input, select, textarea {
+      margin-bottom: 0.5rem;
+      padding: 5px;
+      width: 200px;
+    }
+
+    button {
+      padding: 6px 12px;
+      margin-top: 0.5rem;
+    }
+
+    textarea {
+      width: 100%;
+      max-width: 100%;
+      height: 80px;
+    }
+
+    pre {
+      background: #f8f8f8;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      overflow-x: auto;
+    }
+
+    table {
+      margin-top: 1rem;
+      border-collapse: collapse;
+    }
+
+    table, td, th {
+      border: 1px solid #999;
+      padding: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Parking Lot API Simulator</h1>
+
+  <form onsubmit="return false;">
+    <fieldset>
+      <legend>Set Layout per Floor (JSON)</legend>
+      <label for="setFloor">Floor Number:</label>
+      <input type="number" id="setFloor" min="1" value="1" /><br />
+      <label for="layoutJSON">Layout:</label><br />
+      <textarea id="layoutJSON" placeholder='e.g. [["A-1","M-1"],["B-1","X-0"]]'>[["A-1","M-1"],["B-1","X-0"]]</textarea><br />
+      <button onclick="setLayout()">Set Layout</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Upload Excel Layout</legend>
+      <input type="file" id="excelFile" />
+      <button onclick="uploadExcel()">Upload</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Layout Map</legend>
+      <label for="mapFloor">Floor:</label>
+      <input type="number" id="mapFloor" value="1" min="1" />
+      <button onclick="getMap()">View Map</button>
+      <div id="mapTable"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Available Spots</legend>
+      <label for="availType">Vehicle Type:</label>
+      <select id="availType">
+        <option value="M">Motorcycle (M)</option>
+        <option value="A">Automobile (A)</option>
+        <option value="B">Bicycle (B)</option>
+      </select>
+      <button onclick="available()">Check</button>
+      <pre id="availableResult"></pre>
+    </fieldset>
+
+    <fieldset>
+      <legend>Park Vehicle</legend>
+      <label for="parkType">Vehicle Type:</label>
+      <select id="parkType">
+        <option value="M">Motorcycle (M)</option>
+        <option value="A">Automobile (A)</option>
+        <option value="B">Bicycle (B)</option>
+      </select><br />
+      <label for="parkNumber">Vehicle Number:</label>
+      <input type="text" id="parkNumber" />
+      <button onclick="park()">Park</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Search Vehicle</legend>
+      <label for="searchNumber">Vehicle Number:</label>
+      <input type="text" id="searchNumber" />
+      <button onclick="searchVehicle()">Search</button>
+      <pre id="searchResult"></pre>
+    </fieldset>
+
+    <fieldset>
+      <legend>Unpark Vehicle</legend>
+      <label for="unparkSpot">Spot ID:</label>
+      <input type="text" id="unparkSpot" /><br />
+      <label for="unparkNumber">Vehicle Number:</label>
+      <input type="text" id="unparkNumber" />
+      <button onclick="unpark()">Unpark</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Reset System</legend>
+      <button onclick="resetSystem()">Reset All Data</button>
+    </fieldset>
+  </form>
+
+  <script>
+    async function park() {
+      const type = document.getElementById("parkType").value;
+      const number = document.getElementById("parkNumber").value;
+      const res = await fetch("/api/v1/park", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ vehicleType: type, vehicleNumber: number })
+      });
+      alert(await res.text());
+      getMap();
+    }
+
+    async function unpark() {
+      const spot = document.getElementById("unparkSpot").value;
+      const number = document.getElementById("unparkNumber").value;
+      const res = await fetch("/api/v1/unpark", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ spotId: spot, vehicleNumber: number })
+      });
+      alert(await res.text());
+      getMap();
+    }
+
+    async function available() {
+      const type = document.getElementById("availType").value;
+      const res = await fetch("/api/v1/available?vehicleType=" + type);
+      const data = await res.json();
+      document.getElementById("availableResult").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function searchVehicle() {
+      const number = document.getElementById("searchNumber").value;
+      const res = await fetch("/api/v1/search/" + number);
+      const data = await res.json();
+      document.getElementById("searchResult").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function getMap() {
+      const floor = document.getElementById("mapFloor").value;
+      const res = await fetch("/api/v1/layout/map?floor=" + floor);
+      const data = await res.json();
+      const rows = data.map || [];
+      const table = document.createElement("table");
+      rows.forEach(line => {
+        const tr = document.createElement("tr");
+        line.split(/\s{2,}/).forEach(cell => {
+          const td = document.createElement("td");
+          if (cell.includes('(X)')) {
+            td.style.backgroundColor = 'red';
+            td.style.color = 'white';
+          } else {
+            td.style.backgroundColor = 'lightgreen';
+            td.style.color = 'black';
+          }
+          td.textContent = cell;
+          tr.appendChild(td);
+        });
+        table.appendChild(tr);
+      });
+      const container = document.getElementById("mapTable");
+      container.innerHTML = "";
+      container.appendChild(table);
+    }
+
+    async function setLayout() {
+      const floor = parseInt(document.getElementById("setFloor").value);
+      const layout = JSON.parse(document.getElementById("layoutJSON").value);
+      const res = await fetch("/api/v1/layout/floor", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ floor, layout })
+      });
+      alert(await res.text());
+      getMap();
+    }
+
+    async function uploadExcel() {
+      const file = document.getElementById("excelFile").files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await fetch("/api/v1/layout/upload", {
+        method: "POST",
+        body: formData
+      });
+      alert(await res.text());
+      getMap();
+    }
+
+    async function resetSystem() {
+      const confirmed = confirm("Are you sure you want to reset the entire system?");
+      if (!confirmed) return;
+      const res = await fetch("/api/v1/reset", { method: "POST" });
+      alert(await res.text());
+      getMap();
+    }
+  </script>
+</body>
+</html>

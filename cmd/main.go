@@ -53,6 +53,8 @@ func main() {
 	v1.GET("/layout/map", handler.GetLayoutMap)
 	v1.POST("/reset", handler.ResetSystem)
 
+	e.Static("/", "static")
+
 	addr := fmt.Sprintf(":%d", AppConfig.Server.Port)
 	log.Printf("Server starting at %s...", addr)
 	if err := e.Start(addr); err != nil {
