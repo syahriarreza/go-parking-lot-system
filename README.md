@@ -135,7 +135,6 @@ Supported actions:
 - Echo framework (HTTP server)
 - testify (unit testing)
 - viper (config reader)
-- openpyxl (Excel layout support)
 
 ---
 
